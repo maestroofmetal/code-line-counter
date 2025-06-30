@@ -76,7 +76,7 @@ def print_dict():
         line_count = len(counter_file.readlines())
         ext_dict[".py"] -= line_count
     
-    #creates a key for Total    
+    #counts the total lines 
     total_lines = 0
     most_code = float("-inf")
     primary_ext = ""
@@ -88,22 +88,22 @@ def print_dict():
             primary_ext = key
             
     print()
-    print("-" * 45)
+    print("-" * 43)
     print(f"{'Extension':<12} | {'Lines':>7} | {'Percent of code':>17}")
-    print("-" * 45)        
+    print("-" * 43)        
             
     for key, value in ext_dict.items():
-        if key != "Total" and value != 0:
+        if value != 0:
             percent = round(100*value / total_lines, 2)
             print(f"{key:<12} | {value:>7} | {percent:>16.2f}%")
             
-    print("-" * 45)
+    print("-" * 43)
     print(f"{'Total lines:':25}{total_lines:>17}")    
     
     if most_code == 0:
         print(f"{'No code found!':>30}")
     else:
         print(f"{'Primary language:':25}{lang_dict[primary_ext]:>17}")
-    print("-" * 45)
+    print("-" * 43)
 
 main()

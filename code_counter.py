@@ -56,9 +56,10 @@ def get_lines(code_dir=None, dir=None):
             #gets the file extension    
             file_ext =  os.path.splitext(item)[1]
             
-            if file_ext in ext_dict:
+            #builds the dict and counts the code
+            if file_ext in ext_dict and file_ext in lang_dict:
                 ext_dict[file_ext] += line_count
-            else:
+            elif file_ext not in ext_dict and file_ext in lang_dict:
                 ext_dict[file_ext] = line_count
                 
         elif os.path.isdir(item_path):
@@ -70,15 +71,6 @@ def get_lines(code_dir=None, dir=None):
     return ext_dict
     
 def print_dict():
-    #cleans dictionary before printing
-    exts_to_remove = []
-    
-    for key in ext_dict:
-        if key not in lang_dict:
-            exts_to_remove.append(f"{key}")
-    for ext in exts_to_remove:
-        del ext_dict[ext]
-        
     #removes the length of this script from the total count
     with open(os.path.abspath(__file__)) as counter_file:
         line_count = len(counter_file.readlines())
@@ -106,12 +98,12 @@ def print_dict():
             print(f"{key:<12} | {value:>7} | {percent:>16.2f}%")
             
     print("-" * 45)
-    print(f"{'Total lines:':25}{total_lines:>20}")    
+    print(f"{'Total lines:':25}{total_lines:>17}")    
     
     if most_code == 0:
         print(f"{'No code found!':>30}")
     else:
-        print(f"{'Primary language:':25}{lang_dict[primary_ext]:>20}")
+        print(f"{'Primary language:':25}{lang_dict[primary_ext]:>17}")
     print("-" * 45)
 
 main()
